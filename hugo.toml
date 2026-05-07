@@ -1,0 +1,60 @@
+baseURL = 'https://example.org/'
+title = '曲陵札記'
+languageCode = 'zh-TW'
+theme = 'hugo-theme-reimu'
+
+defaultContentLanguage = 'zh-CN'
+[languages]
+[languages.zh-CN]
+languageName = '标准汉语(简体)'
+weight = 1
+hasCJKLanguage = true
+[languages.zh-TW]
+languageName = '標準漢語(繁體)'
+weight = 2
+hasCJKLanguage = true
+[languages.lzh]
+languageName = '古漢語(文言文)'
+weight = 3
+hasCJKLanguage = true
+[languages.yue]
+languageName = '粵語(白話)'
+weight = 4
+hasCJKLanguage = true
+[languages.ko]
+languageName = '한국어(한글)'
+weight = 5
+hasCJKLanguage = true
+[languages.oko]
+languageName = '韓國語(國漢文)'
+weight = 6
+hasCJKLanguage = true
+[languages.ja]
+languageName = '現代日本語'
+weight = 7
+hasCJKLanguage = true
+[languages.en]
+languageName = 'English(US)'
+weight = 8
+
+
+[params.poetry]
+enable = true
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+delimiters.block = [["\\[", "\\]"], ["$$", "$$"]]
+delimiters.inline = [["\\(", "\\)"], ["$", "$"]]
+
+[markup.highlight]
+guessSyntax = true
+noClasses = false
+
+[outputs]
+home = ["Algolia", "HTML", "RSS"]
+
+[outputFormats.Algolia]
+baseName = "algolia"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true

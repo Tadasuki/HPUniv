@@ -1,0 +1,89 @@
+categories: 門類
+search: 檢索
+tags: 標籤
+tagcloud: 標籤雲
+tweets: 碎語
+prev: 卷上
+next: 卷下
+comment: 寄語
+reading: 閱覽數
+archive_a: 彙編
+archive_b: 彙編 {{ . -}}
+page: 第 {{ . }} 頁
+recent_posts: 近作
+newer: 前篇
+older: 後篇
+share: 傳閱
+powered_by: 始於
+rss_feed: 訂閱
+category: 類
+tag: 籤
+toc: 篇章大綱
+more: 閱覽全文
+
+home: 卷首
+about: 自序
+friend: 襟契
+archives: 歸檔
+
+sidebar:
+  post: 記事
+  category: 門類
+  tag: 標籤
+
+not_found:
+  title: 肆 零 肆 (ﾟ⊿ﾟ)ﾂ
+  subtitle: 滿 身 創 痍
+
+post:
+  count:
+    one: "{{- . }} 字"
+    other: "{{- . }} 字"
+  time:
+    one: "{{- . }} 分鐘"
+    other: "{{- . }} 分鐘"
+
+busuanzi:
+  pv: 總閱覽
+  uv: 總訪客
+
+sticky: 置頂
+
+service_worker:
+  title: 獲取新卷
+  content: 卷中有易，是否更換？
+  confirm: 更換
+  cancel: 罷
+
+sponsor: 惠助
+
+home_categories:
+  count:
+    one: "{{- . }} 篇"
+    other: "{{- . }} 篇"
+
+article_copyright:
+  author: 筆者：
+  permalink: 卷索：
+  title: 卷題：
+  date: 佈於：
+  updated: 易於：
+  license: 文權：
+  license_content: 茲編除特載外，咸遵 {{ . }} 權契，轉載請正溯其源！
+
+multi_language:
+  not_found: 未獲他語之本
+
+rss:
+  author: 筆者：{{ .name }}（{{ .email }}）
+  date: 此文於 {{ .pubDate }} 始發於 {{ .content }}，終更於 {{ .lastmod }}
+
+algolia:
+  input_placeholder: "尋....."
+  hits_empty: "未見與「${query}」相符者"
+  hits_stats: "獲 ${hits} 條（歷 ${time} 毫）"
+
+heat_map_card:
+  no_articles: 此文烏有
+  words: 字
+  total_articles: 共 $1 篇，合 $2 字

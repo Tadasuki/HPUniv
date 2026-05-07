@@ -1,0 +1,15 @@
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 2000,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "markdown.preview.breaks": true,
+  "markdown.preview.typographer": true,
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.noveler": true
+  },
+  "search.exclude": {
+    "**/.noveler": true
+  }
+}

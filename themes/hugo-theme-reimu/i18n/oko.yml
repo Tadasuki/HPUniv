@@ -1,0 +1,91 @@
+categories: 分類
+search: 檢索
+tags: 標籤
+tagcloud: 標籤雲
+tweets: 推文
+prev: 以前頁面
+next: 次回頁面
+comment: 答偈
+reading: 照會數
+archive_a: 彙整
+archive_b: 彙整 {{ . -}}
+page: 第 {{ . }} 頁
+recent_posts: 最新文章
+newer: 前篇
+older: 後篇
+share: 共有
+powered_by: 基於：
+rss_feed: RSS購讀
+category: 分類
+tag: 標籤
+toc: 目次
+more: 더 보기
+
+title: 曲陵札記
+
+home: 홈
+about: 關於
+friend: 友鍊
+archives: 歸檔
+
+sidebar:
+  post: 文章
+  category: 分類
+  tag: 標籤
+
+not_found:
+  title: 4 0 4 (ﾟ⊿ﾟ)ﾂ
+  subtitle: 滿 身 創 痍
+
+post:
+  count:
+    one: "{{- . }} 字"
+    other: "{{- . }} 字"
+  time:
+    one: "{{- . }} 分"
+    other: "{{- . }} 分"
+
+busuanzi:
+  pv: 總訪問 횟수
+  uv: 總訪問者數
+
+sticky: 固定됨
+
+service_worker:
+  title: 새版本 發見
+  content: 웹사이트에 새로운 內容이 있습니다. 업데이트하시겠습니까?
+  confirm: 更新
+  cancel: 取消
+
+sponsor: 贊助
+
+home_categories:
+  count:
+    one: "{{- . }} 篇의 글"
+    other: "{{- . }} 篇의 글"
+
+article_copyright:
+  author: 本文著者：
+  permalink: 本文連結：
+  title: 本文標題：
+  date: 發布時間：
+  updated: 更新時間：
+  license: 版權：
+  license_content: 이 블로그의 모든 文章은 別途 明示가 없는 한 {{ . }} 授權協議에 따라 利用 可能합니다. 轉載時 出處를 밝혀주세요!
+
+multi_language:
+  not_found: 本文章에 對應하는 言語 版本을 찾을 수 없습니다.
+
+rss:
+  author: 著者：{{ .name }}（{{ .email }}）
+  date: 이 글은 {{ .pubDate }}에 {{ .content }}에서 初發되었으며, 最後修改는 {{ .lastmod }}에 이루어졌습니다.
+
+algolia:
+  input_placeholder: "檢索....."
+  hits_empty: "「${query}」와 關聯된 內容을 찾을 수 없습니다."
+  hits_stats: "${hits}個의 結果를 찾았습니다 (${time} ms 所要)"
+
+heat_map_card:
+  no_articles: 文章 없음
+  words: 字
+  total_articles: 共 $1 篇의 文章, $2 字

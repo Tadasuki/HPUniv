@@ -1,0 +1,91 @@
+categories: 카테고리
+search: 검색
+tags: 태그
+tagcloud: 태그 클라우드
+tweets: 트윗
+prev: 이전 페이지
+next: 다음 페이지
+comment: 댓글
+reading: 조회수
+archive_a: 아카이브
+archive_b: 아카이브 {{ . -}}
+page: 제 {{ . }} 페이지
+recent_posts: 최신 글
+newer: 이전 글
+older: 다음 글
+share: 공유
+powered_by: 제공
+rss_feed: RSS 구독
+category: 카테고리
+tag: 태그
+toc: 목차
+more: 더 보기
+
+title: 곡릉찰기
+
+home: 홈
+about: 소개
+friend: 링크
+archives: 아카이브
+
+sidebar:
+  post: 포스트
+  category: 카테고리
+  tag: 태그
+
+not_found:
+  title: 4 0 4 (ﾟ⊿ﾟ)ﾂ
+  subtitle: 만신창이
+
+post:
+  count:
+    one: "{{- . }} 자"
+    other: "{{- . }} 자"
+  time:
+    one: "{{- . }} 분"
+    other: "{{- . }} 분"
+
+busuanzi:
+  pv: 총 방문 횟수
+  uv: 총 방문자 수
+
+sticky: 고정됨
+
+service_worker:
+  title: 새 버전 발견
+  content: 웹사이트에 새로운 내용이 있습니다. 업데이트하시겠습니까?
+  confirm: 업데이트
+  cancel: 취소
+
+sponsor: 후원
+
+home_categories:
+  count:
+    one: "{{- . }} 개의 글"
+    other: "{{- . }} 개의 글"
+
+article_copyright:
+  author: 작성자：
+  permalink: 링크：
+  title: 제목：
+  date: 게시일：
+  updated: 수정일：
+  license: 저작권：
+  license_content: 이 블로그의 모든 글은 별도 명시가 없는 한 {{ . }} 라이선스에 따라 이용 가능합니다. 전재 시 출처를 밝혀주세요!
+
+multi_language:
+  not_found: 해당 언어 버전의 문서를 찾을 수 없습니다.
+
+rss:
+  author: 작성자：{{ .name }}（{{ .email }}）
+  date: 이 글은 {{ .pubDate }}에 {{ .content }}에서 처음 게시되었으며, 마지막 수정은 {{ .lastmod }}에 이루어졌습니다.
+
+algolia:
+  input_placeholder: "검색....."
+  hits_empty: "「${query}」와 관련된 내용을 찾을 수 없습니다."
+  hits_stats: "${hits}개의 결과를 찾았습니다 (${time} ms 소요)"
+
+heat_map_card:
+  no_articles: 게시글 없음
+  words: 자
+  total_articles: 총 $1 개의 글, $2 자

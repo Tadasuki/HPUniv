@@ -1,0 +1,106 @@
+{{ $params := .Site.Params }}
+{{ $local_basic_families := default "" (delimit (apply (default slice $params.local_font.article) "printf" "'%s'" ".") ",") }}
+{{ $basic_families := default $local_basic_families (delimit (apply (default slice $params.font.article) "printf" "'%s'" ".") ",") }}
+
+$basic-families: {{ $basic_families }};
+$local-basic-families: {{ $local_basic_families }};
+
+{{- $custom_basic_font := .Site.Params.custom_font.article -}}
+{{ $_custom_basic_families := slice }}
+{{ range $custom_basic_font }}
+  {{ $_custom_basic_families = $_custom_basic_families | append (default "" (printf "'%s'" .name)) }}
+{{ end }}
+{{ $custom_basic_families := delimit $_custom_basic_families "," }}
+
+
+$custom-basic-families: {{ default $basic_families $custom_basic_families }};
+
+$font-basic: $custom-basic-families, $basic-families, $local-basic-families;
+
+// Modern loader — single frosted-glass overlay that fades out
+#loader {
+  .loading-bg {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;                       // covers full viewport
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Hide the right half panel (we only need one overlay now)
+  .loading-right-bg {
+    display: none;
+  }
+
+  .spinner-box {
+    position: fixed;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+
+    .loading-taichi {
+      opacity: 0.85;
+      filter: drop-shadow(0 0 12px var(--red-3, rgba(255,175,175,0.8)));
+    }
+
+    .rotate {
+      animation: rotate-all 2s linear infinite;
+    }
+
+    .loading-word {
+      position: absolute;
+      color: var(--red-1, #ff5252);
+      top: calc(50% + 100px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font:
+        700 1.1rem $font-basic;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+  }
+}
+
+[data-theme="dark"] {
+  #loader {
+    .loading-bg {
+      background: rgba(22, 24, 30, 0.92);
+    }
+
+    .spinner-box .loading-word {
+      color: var(--red-1, #ff5252);
+    }
+  }
+}
+
+// When loader is dismissed — fade everything out
+#loader.loading {
+  .loading-bg {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .loading-left-bg {
+    transform: none; // override old translateX — not needed
+  }
+
+  .spinner-box {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes rotate-all {
+  to {
+    transform: rotate(360deg);
+  }
+}

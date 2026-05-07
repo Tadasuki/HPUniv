@@ -1,0 +1,167 @@
+// Colors
+:root {
+  --red-0: #{$light-red-0};
+  --red-1: #{$light-red-1};
+  --red-2: #{$light-red-2};
+  --red-3: #{$light-red-3};
+  --red-4: #{$light-red-4};
+  --red-5: #{$light-red-5};
+  --red-5-5: #{$light-red-5-5};
+  --red-6: #{$light-red-6};
+
+  --grey-9: #4a3d58;
+  --grey-7: var(--color-default);
+
+  --color-archive-year: #2d1e3a;
+  --color-default: #2a1d35;
+  --color-border: var(--red-3);
+  --color-link: var(--red-1);
+
+  // Background is a clearly lavender-tinted tone
+  // so that near-white cards (#FEFBFF) visibly pop
+  --color-background: #E4D8EF;
+  --color-code-background: #fbf7fb;
+  --color-header-background: rgba(255, 250, 253, 0.9);
+  --color-footer-background: #EBE1F4;
+  --color-mobile-nav-background: #fffafd;
+
+  // Cards and surfaces stay near-white for maximum contrast
+  --color-wrap: #FEFBFF;
+  --color-sticky: #FEFBFF;
+
+  --color-h2-border: #dccce8;
+  --color-control-border: rgba(168, 130, 196, 0.22);
+  --color-control-border-strong: rgba(124, 92, 158, 0.30);
+  --color-meta-shadow: var(--red-5);
+  --color-hover-shadow: rgba(100, 72, 140, 0.14);
+  --color-h2-after: var(--red-1);
+  --color-red-6-shadow: #{$light-color-red-6-shadow};
+  --color-red-3-shadow: #{$light-color-red-3-shadow};
+
+  --highlight-nav: #{$light-highlight-nav};
+  --highlight-scrollbar: #{$light-highlight-scrollbar};
+  --highlight-background: #{$light-highlight-background};
+  --highlight-selection: #{$light-highlight-selection};
+  --highlight-foreground: #{$light-highlight-foreground};
+  --highlight-comment: #{$light-highlight-comment};
+  --highlight-red: #{$light-highlight-red};
+  --highlight-orange: #{$light-highlight-orange};
+  --highlight-yellow: #{$light-highlight-yellow};
+  --highlight-green: #{$light-highlight-green};
+  --highlight-aqua: #{$light-highlight-aqua};
+  --highlight-blue: #{$light-highlight-blue};
+  --highlight-purple: #{$light-highlight-purple};
+  --highlight-deletion: #{$light-highlight-deletion};
+  --highlight-deletion-bg: #{$light-highlight-deletion-bg};
+  --highlight-addition: #{$light-highlight-addition};
+  --highlight-addition-bg: #{$light-highlight-addition-bg};
+
+  --shadow-meta: 0 0 5px 2px var(--color-meta-shadow);
+  --shadow-meta-hover: 0 0 6px 4px var(--color-meta-shadow);
+
+  // Stronger shadow so cards lift off the lavender background
+  --shadow-card: 0 4px 20px -6px rgba(100, 72, 140, 0.18);
+  --shadow-card-hover: 0 8px 28px -6px rgba(100, 72, 140, 0.28);
+
+  --shadow-red-6-shadow: 0 0 8px var(--color-red-6-shadow);
+
+  /* Smooth dark/light mode transition */
+  --theme-transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+[data-theme="dark"] {
+  &:root {
+    --red-0: #f1e9f9;
+    --red-1: #efdcfb;
+    --red-2: #f3dbf7;
+    --red-4: #{$dark-red-4};
+    --red-5: #{$dark-red-5};
+    --red-5-5: #{$dark-red-5-5};
+    --red-6: #{$dark-red-6};
+
+    --grey-9: #eadcf8;
+    --color-archive-year: #f2e6fb;
+    --color-default: #f0e7f8;
+    // Background much deeper than cards so cards are clearly visible
+    --color-background: #100C1A;
+    --color-code-background: rgba(232, 232, 232, 0.1);
+    --color-header-background: #1E1830;
+    --color-footer-background: #130F1E;
+    --color-mobile-nav-background: #1E1830;
+    --color-wrap: #1E1830; // cards: noticeably lighter than background
+    --color-border: var(--red-5);
+
+    --color-h2-border: rgba(200, 160, 220, 0.18);
+    --color-control-border: rgba(200, 160, 220, 0.16);
+    --color-control-border-strong: rgba(200, 160, 220, 0.30);
+    --color-meta-shadow: rgba(0, 0, 0, 0.25);
+    --color-hover-shadow: rgba(0, 0, 0, 0.25);
+
+    --shadow-card: 0 4px 20px -6px rgba(0, 0, 0, 0.45);
+    --shadow-card-hover: 0 8px 28px -6px rgba(0, 0, 0, 0.60);
+
+    --highlight-nav: #{$dark-highlight-nav};
+    --highlight-scrollbar: #{$dark-highlight-scrollbar};
+    --highlight-background: #{$dark-highlight-background};
+    --highlight-selection: #{$dark-highlight-selection};
+    --highlight-foreground: #{$dark-highlight-foreground};
+    --highlight-comment: #{$dark-highlight-comment};
+    --highlight-red: #{$dark-highlight-red};
+    --highlight-orange: #{$dark-highlight-orange};
+    --highlight-yellow: #{$dark-highlight-yellow};
+    --highlight-green: #{$dark-highlight-green};
+    --highlight-aqua: #{$dark-highlight-aqua};
+    --highlight-blue: #{$dark-highlight-blue};
+    --highlight-purple: #{$dark-highlight-purple};
+    --highlight-deletion: #{$dark-highlight-deletion};
+    --highlight-deletion-bg: #{$dark-highlight-deletion-bg};
+    --highlight-addition: #{$dark-highlight-addition};
+    --highlight-addition-bg: #{$dark-highlight-addition-bg};
+  }
+
+  img {
+    filter: brightness(70%);
+  }
+
+  // 排除 lightbox
+  .pswp__img {
+    opacity: 1;
+    filter: none;
+    animation: none;
+  }
+
+  img.lazyloaded {
+    opacity: 1;
+    animation: blur-darken 0.8s ease-in-out forwards !important;
+  }
+}
+
+// Fonts
+$font-basic: $custom-basic-families, $basic-families, $local-basic-families;
+$font-code: $custom-code-families, $code-families, $local-code-families;
+
+$font-size: 14px;
+$line-height: 1.67;
+$line-height-title: 1.2em;
+
+// Header
+$logo-size: 42px;
+$subtitle-size: 17px;
+$banner-height: auto; // header height is now auto — see header.scss
+
+// Layout
+$article-padding: 20px;
+$mobile-nav-width: 280px;
+
+// Media queries
+$mq-mobile: "screen and (max-width: 479px)";
+$no-mobile: "screen and (min-width: 480px)";
+$mq-tablet: "screen and (min-width: 480px) and (max-width: 767px)";
+$mq-normal: "screen and (min-width: 768px)";
+$mg-normal: "screen and (max-width: 767px)";
+$mq-large: "screen and (min-width: 960px)";
+$mg-large: "screen and (max-width: 959px)";
+$mq-extra-large: "screen and (min-width: 1242px)";
+$mg-extra-large: "screen and (max-width: 1241px)";
+$post-radius: 22px;
+$tag-radius: 16px;
