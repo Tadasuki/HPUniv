@@ -19,3 +19,7 @@ hugo serve
 - Change your post cover in `data/covers.yml`
 - Change your avatar in `static/avatar/avatar.webp`
 - Add your posts in `content/post`
+
+## Contributors
+
+This project is maintained with assistance from [Codex](https://github.com/codex) and [Claude](https://github.com/claude).
