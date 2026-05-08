@@ -8,11 +8,15 @@
 
 <div id="particles-js"></div>
 
-<script src={{ (resources.Get "background/particles.min.js").Permalink }}></script>
+{{- $particlesJs := resources.Get "background/particles.min.js" -}}
+{{- $particlesConfig := resources.Get "background/particlesjs-config.json" -}}
+<script src="{{ $particlesJs.RelPermalink }}"></script>
 <script>
-  particlesJS.load('particles-js', {{ (resources.Get "background/particlesjs-config.json").Permalink }}, function() {
-    console.log('particles.js loaded - callback');
-  });
+  if (window.particlesJS) {
+    particlesJS.load('particles-js', "{{ $particlesConfig.RelPermalink }}", function() {
+      console.log('particles.js loaded - callback');
+    });
+  }
 </script>
 
 <style>
@@ -21,7 +25,9 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 100vh;
     z-index: -1;
+    pointer-events: none;
   }
 </style>
 
