@@ -158,7 +158,18 @@ $triangle-badge-icon: {{ $params.triangle_badge.icon }};
 @include global-reset;
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: $font-title;
   font-weight: 700;
+}
+
+#logo,
+#subtitle,
+.post-title,
+.archive-article-title,
+.widget-title,
+.article-nav-title,
+.comment-title {
+  font-family: $font-title;
 }
 
 input, button {
@@ -197,6 +208,26 @@ body {
     background: var(--red-1);
     color: #fff;
   }
+}
+
+body:lang(ko),
+body:lang(oko) {
+  font-family: $font-basic;
+}
+
+body:lang(ko) .article-entry p,
+body:lang(ko) .article-entry li,
+body:lang(ko) .article-entry td,
+body:lang(ko) .article-entry th,
+body:lang(ko) .article-summary,
+body:lang(ko) .post-excerpt,
+body:lang(oko) .article-entry p,
+body:lang(oko) .article-entry li,
+body:lang(oko) .article-entry td,
+body:lang(oko) .article-entry th,
+body:lang(oko) .article-summary,
+body:lang(oko) .post-excerpt {
+  font-family: $font-korean;
 }
 
 a, .main-nav-icon, .popup-btn-close, button {

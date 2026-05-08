@@ -214,9 +214,9 @@ anchor_icon: # default use '#' icon, you can use a hexadecimal representation of
 reimu_cursor:
   enable: true
   cursor:
-    default: ../images/cursor/reimu-cursor-default.png  # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
-    pointer: ../images/cursor/reimu-cursor-pointer.png
-    text: ../images/cursor/reimu-cursor-text.png
+    default: ../images/cursor/default.png  # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
+    pointer: ../images/cursor/pointer.png
+    text: ../images/cursor/text.png
 
 icon_font: 4552607_a0oqhord1y
 
@@ -225,10 +225,20 @@ icon_font: 4552607_a0oqhord1y
 
 # Custom Font
 custom_font:
-  enable: false
+  enable: true
   article:
-    # - css: https://fontsapi.zeoseven.com/292/main/result.css # font css
-    #   name: LXGW WenKai # font name
+    - css: https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap # Source Han Serif / 思源宋体
+      name: Noto Serif SC
+    - css: https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap # Source Han Sans / 思源黑体
+      name: Noto Sans SC
+    - css: https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap # Source Han Sans Korean / 본고딕
+      name: Noto Sans KR
+    - css: https://fonts.googleapis.com/css2?family=Jua&display=swap # Rounded Korean display / 韓文圓體
+      name: Jua
+    - css: https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800;900&display=swap # Japanese rounded gothic / 日式粗圆体
+      name: M PLUS Rounded 1c
+    - css: https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;500;600&display=swap # Rounded CJK gothic
+      name: Chiron GoRound TC
   code:
 
 # https://fonts.google.com/
@@ -237,8 +247,6 @@ font:
   enable: true
   article:
     - Mulish
-    - Noto Serif SC
-    - Noto Serif KR
   code:
     # - Ubuntu Mono
     - Source Code Pro
@@ -248,12 +256,12 @@ font:
 local_font:
   article:
     - "-apple-system"
-    - AppleMyungjo
-    - "Noto Serif CJK KR"
-    - Batang
+    - "Apple SD Gothic Neo"
+    - "Noto Sans CJK KR"
+    - "Malgun Gothic"
     - PingFang SC
     - Microsoft YaHei
-    - serif
+    - sans-serif
   code:
     - Menlo
     - Monaco
@@ -294,8 +302,6 @@ clipboard:
   success: 
     en: Copy successfully (*^▽^*)
     zh-CN: 复制成功 (*^▽^*)
-    zh-TW: 複製成功 (*^▽^*)
-    yue: 複製成功 (*^▽^*)
     ja: コピー成功 (*^▽^*)
     ko: 복사 성공 (*^▽^*)
     oko: 複製 成功 (*^▽^*)
@@ -303,8 +309,6 @@ clipboard:
   fail: 
     en: Copy failed (ﾟ⊿ﾟ)ﾂ
     zh-CN: 复制失败 (ﾟ⊿ﾟ)ﾂ
-    zh-TW: 複製失敗 (ﾟ⊿ﾟ)ﾂ
-    yue: 複製失敗 (ﾟ⊿ﾟ)ﾂ
     ja: コピー失敗 (ﾟ⊿ﾟ)ﾂ
     ko: 복사 실패 (ﾟ⊿ﾟ)ﾂ
     oko: 複製 失敗 (ﾟ⊿ﾟ)ﾂ
@@ -358,8 +362,6 @@ comment:
   title:
     en: Leave a comment
     zh-CN: 说些什么吧！
-    zh-TW: 說些什麼吧！
-    yue: 講啲咩好呢！
     ja: コメントを残す
     ko: 댓글을 남겨주세요
     oko: 對글을 남겨주세요
@@ -472,8 +474,6 @@ preloader:
   enable: false
   text: 
     zh-CN: 攻击服务器中...
-    zh-TW: 攻擊伺服器中...
-    yue: 搞紧个Server...
     lzh: 方攻其伺候器...
     en: Attacking the server...
     ja: サーバーを攻撃中...
@@ -576,8 +576,6 @@ outdate:
   message:
     en: This article was last updated on {time}. Please note that the content may no longer be applicable.
     zh-CN: 本文最后更新于 {time}，请注意文中内容可能已不适用。
-    zh-TW: 本文最後更新於 {time}，請注意文中內容可能已不適用。
-    yue: 呢篇文最后喺 {time}更新，留意返入面嘅内容可能已經唔再適用喇。
     ja: この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。
     ko: 본 문서는 {time}에 마지막으로 업데이트되었습니다. 내용이 현재와 다를 수 있으니 주의하시기 바랍니다.
     oko: 本文書는 {time}에 마지막으로 更新되었습니다. 內容이 現在와 다를 수 있으니 注意하시기 바랍니다.
@@ -603,12 +601,10 @@ sponsor:
   enable: true
   tip: 
     zh-CN: 请作者喝杯茶吧
-    zh-TW: 請作者喝杯茶吧
     en: Buy me a tea
     ja: 茶を買ってください
     ko: 작가에게 차 한 잔 사주기.
     oko: 作者에게 茶한盞 사주기.
-    yue: 請作者飲茶
     lzh: 惠贈清茗
 
   icon:

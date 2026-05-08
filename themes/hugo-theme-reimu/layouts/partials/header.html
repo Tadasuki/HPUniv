@@ -38,13 +38,21 @@
   </nav>
   {{- if and hugo.IsMultilingual (ne "404" .Type) -}}
   {{- $i18nMap := dict -}}
-  {{- $flagMap := dict "zh-cn" "/images/flags/cn.svg" "zh-tw" "/images/flags/tw.svg" "lzh"
-  "/images/flags/black-dragon.svg" "yue" "/images/flags/hk.svg" "ko" "/images/flags/kr.svg" "oko" "/images/flags/kr.svg"
+  {{- $flagMap := dict "zh-cn" "/images/flags/black-dragon.svg" "zh-tw" "/images/flags/tw.svg" "lzh"
+  "/images/flags/tang.svg" "yue" "/images/flags/hk.svg" "ko" "/images/flags/kr.svg" "oko" "/images/flags/kr.svg"
   "ja" "/images/flags/jp.svg" "en" "/images/flags/us.svg" -}}
   {{- range .Site.Languages -}}
   {{- $i18nMap = merge $i18nMap (dict .Lang .LanguageName) -}}
   {{- end -}}
-  {{- $currentFlag := index $flagMap (lower $.Language.Lang) | default "/images/flags/cn.svg" -}}
+  {{- $currentLang := lower $.Language.Lang -}}
+  {{- $selectedLang := cond (eq $currentLang "ko") "oko" $.Language.Lang -}}
+  {{- $currentFlag := index $flagMap (lower $selectedLang) | default "/images/flags/black-dragon.svg" -}}
+  {{- $koMixedURL := "" -}}
+  {{- $koHangulURL := "" -}}
+  {{- range .AllTranslations -}}
+    {{- if eq (lower .Language.Lang) "oko" -}}{{- $koMixedURL = .RelPermalink -}}{{- end -}}
+    {{- if eq (lower .Language.Lang) "ko" -}}{{- $koHangulURL = .RelPermalink -}}{{- end -}}
+  {{- end -}}
   <nav id="i18n-nav" aria-label="Language selection">
     <div class="custom-dropdown">
       <div class="select-selected" id="select-selected" role="button" aria-haspopup="listbox" aria-expanded="false"
@@ -53,13 +61,15 @@
         <span class="language-option">
           <img id="selected-flag" class="language-flag" src="{{ $currentFlag | relURL }}" alt="" aria-hidden="true"
             loading="lazy">
-          <span id="selected-lang" class="language-name">{{ index $i18nMap $.Language.Lang }}</span>
+          <span id="selected-lang" class="language-name">{{ index $i18nMap $selectedLang }}</span>
         </span>
       </div>
       <ul class="select-items" id="select-items" role="listbox" aria-label="Languages">
         {{- range .Site.Languages -}}
-        {{- $flag := index $flagMap (lower .Lang) | default "/images/flags/cn.svg" -}}
-        <li data-value="{{ .Lang }}" role="option" {{ if eq $.Language.Lang .Lang }}class="selected"
+        {{- if ne (lower .Lang) "ko" -}}
+        {{- $flag := index $flagMap (lower .Lang) | default "/images/flags/black-dragon.svg" -}}
+        {{- $isSelected := or (eq $.Language.Lang .Lang) (and (eq $currentLang "ko") (eq (lower .Lang) "oko")) -}}
+        <li data-value="{{ .Lang }}" role="option" {{ if $isSelected }}class="selected"
           aria-selected="true" {{ else }}aria-selected="false" {{ end }}>
           <span class="language-option">
             <img class="language-flag" src="{{ $flag | relURL }}" alt="" aria-hidden="true" loading="lazy">
@@ -67,9 +77,15 @@
           </span>
         </li>
         {{- end -}}
+        {{- end -}}
       </ul>
     </div>
-    <script>
+    <script data-pjax>
+      window.koScriptLinks = {
+        current: '{{ $currentLang }}',
+        mixed: '{{ $koMixedURL }}',
+        hangul: '{{ $koHangulURL }}'
+      };
       var selectSelected = document.getElementById("select-selected");
       var selectedFlag = document.getElementById("selected-flag");
       var selectedLang = document.getElementById("selected-lang");

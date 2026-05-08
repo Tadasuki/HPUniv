@@ -35,6 +35,9 @@
         {{- if reflect.IsMap $pageSidebar -}}
           {{- $pageSidebar = $pageSidebar.position -}}
         {{- end -}}
+        {{- if and .IsPage (in .Site.Params.mainSections .Type) (eq $pageSidebar nil) -}}
+          {{- $pageSidebar = "right" -}}
+        {{- end -}}
         <div id="content"
           aria-label="Page content"
           {{ if or (and (eq $globalSidebar "left") (eq $pageSidebar nil)) (eq $pageSidebar "left") }}class="sidebar-left"{{ end }}

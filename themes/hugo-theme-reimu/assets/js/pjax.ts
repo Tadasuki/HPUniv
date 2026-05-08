@@ -118,6 +118,7 @@ window.Pjax &&
       "#header>img",
       "#header>picture",
       "head title",
+      "#nav-home-link",
       "#header-title",
       "#subtitle-wrap",
       "#main",

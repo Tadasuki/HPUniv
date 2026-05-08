@@ -9,11 +9,11 @@
   --red-5-5: #{$light-red-5-5};
   --red-6: #{$light-red-6};
 
-  --grey-9: #4a3d58;
+  --grey-9: #33273d;
   --grey-7: var(--color-default);
 
-  --color-archive-year: #2d1e3a;
-  --color-default: #2a1d35;
+  --color-archive-year: #21152a;
+  --color-default: #18111f;
   --color-border: var(--red-3);
   --color-link: var(--red-1);
 
@@ -137,7 +137,9 @@
 }
 
 // Fonts
-$font-basic: $custom-basic-families, $basic-families, $local-basic-families;
+$font-title: 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
+$font-korean: 'Noto Sans KR', 'Source Han Sans KR', 'Source Han Sans K', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+$font-basic: 'Noto Sans SC', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC', $font-korean, $basic-families, $local-basic-families;
 $font-code: $custom-code-families, $code-families, $local-code-families;
 
 $font-size: 14px;

@@ -10,6 +10,9 @@
   {{- partial "helpers/cdnJs.html" (dict "name" "material_theme" "ctx" .) -}}
 {{- end -}}
 
+{{- if hasPrefix (lower .Language.Lang) "zh" -}}
+  {{- partial "helpers/cdnJs.html" (dict "name" "opencc" "ctx" .) -}}
+{{- end -}}
 {{- partial "helpers/ts.html" (dict "source" "js/main.ts" "ctx" .) -}}
 
 {{- if $params.animation.enable -}}

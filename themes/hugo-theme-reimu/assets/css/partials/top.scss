@@ -49,11 +49,11 @@
 
   @media (hover: hover) {
     .sidebar-top-taichi {
-      opacity: 1;
+      opacity: 0;
     }
 
     .arrow-up {
-      opacity: 0;
+      opacity: 1;
     }
 
     &:hover {
