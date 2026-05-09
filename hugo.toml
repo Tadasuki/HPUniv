@@ -10,7 +10,7 @@ languageName = '现代汉语'
 weight = 1
 hasCJKLanguage = true
 [languages.lzh]
-languageName = '文言文'
+languageName = '文言'
 weight = 2
 hasCJKLanguage = true
 [languages.ko]
@@ -18,7 +18,7 @@ languageName = '한국어(한글)'
 weight = 3
 hasCJKLanguage = true
 [languages.oko]
-languageName = '國漢文/한글'
+languageName = '國漢文 / 한글'
 weight = 4
 hasCJKLanguage = true
 [languages.ja]

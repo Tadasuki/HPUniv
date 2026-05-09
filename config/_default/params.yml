@@ -594,7 +594,7 @@ moe_icp:
 
 # 月球 ICP 备案
 moon_icp:
-  icpnumber: 08201002 # 月球ICP备案号
+  icpnumber: "08201002" # 月球ICP备案号
 
 # Sponsor
 sponsor:

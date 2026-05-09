@@ -320,7 +320,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     const useHangul = script !== "ko";
     const targetMode = useHangul ? "hangul" : "mixed";
     const target = koTargetUrl(targetMode);
-    koScriptButton.textContent = useHangul ? "한글" : "한자";
+    koScriptButton.textContent = useHangul ? "한글전용과" : "국한문혼용";
     koScriptButton.title = useHangul ? "한글 전용으로 보기" : "國漢文混寫로 보기";
     koScriptButton.setAttribute("aria-label", koScriptButton.title);
     koScriptButton.dataset.targetMode = targetMode;
@@ -359,13 +359,12 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : null);
     localStorage.setItem("dark_mode", config);
 
-    themeButton.id = `nav-${
-      config === "true"
+    themeButton.id = `nav-${config === "true"
         ? "moon"
         : config === "false"
           ? "sun"
           : "circle-half-stroke"
-    }-btn`;
+      }-btn`;
 
     document.body.dispatchEvent(
       new CustomEvent("reimu:theme-set", {
@@ -429,7 +428,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
       --red-5: color-mix(in srgb, var(--md-sys-color-primary-light) 15%, white);
       --red-5-5: color-mix(in srgb, var(--md-sys-color-primary-light) 10%, white);
       --red-6: color-mix(in srgb, var(--md-sys-color-primary-light) 5%, white);
-    
+
       --color-border: var(--red-3);
       --color-link: var(--red-1);
       --color-meta-shadow: var(--red-6);
@@ -437,7 +436,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
       --color-red-6-shadow: var(--red-2);
       --color-red-3-shadow: var(--red-3);
     }
-    
+
     [data-theme="dark"]:root {
       --red-0: var(--red-1);
       --red-1: color-mix(in srgb, var(--md-sys-color-primary-dark) 90%, white);
@@ -447,7 +446,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
       --red-5: color-mix(in srgb, var(--md-sys-color-primary-dark) 20%, transparent);
       --red-5-5: color-mix(in srgb, var(--md-sys-color-primary-dark) 10%, transparent);
       --red-6: color-mix(in srgb, var(--md-sys-color-primary-dark) 5%, transparent);
-      
+
       --color-border: var(--red-5);
     }
     `;

@@ -170,8 +170,9 @@
 }
 
 @font-face {
-  font-family: 'Nano Old Song A Local';
-  src: url('/fonts/NanoOldSongA-Regular.ttf') format('truetype');
+  font-family: 'Jinghua';
+  src: url("https://frostming.github.io/jinghua-webfont/css/京華老宋体v2.002.ttf") format('truetype');
+  font-feature-settings: "ss04", "ss05";
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -192,16 +193,16 @@ $font-basic-kr: 'Seoul Namsan Local', $font-korean, $basic-families, $local-basi
 $font-basic-ja: 'Sawarabi Gothic Local', 'M PLUS Rounded 1c', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
 $font-basic-en: 'Alegreya Sans', 'Source Sans 3', 'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-title-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-$font-basic-lzh: 'Nano Old Song A Local', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
+$font-basic-lzh: 'Jinghua', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
 $font-title-lzh: 'Chaohua Title A Local', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
 $font-code: 'Maple Mono NF CN Local', $custom-code-families, $code-families, $local-code-families;
 
-$font-size: 19px; //普通文本大小
+$font-size: 16px; //普通文本大小
 $line-height: 1.67;
 $line-height-title: 1.2em;
 
 // Header
-$logo-size: 38px;
+$logo-size: 32px; // 标题大小
 $subtitle-size: 17px;
 $banner-height: auto; // header height is now auto — see header.scss
 
