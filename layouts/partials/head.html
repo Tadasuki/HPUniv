@@ -46,7 +46,7 @@
   href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
   onload="this.rel='stylesheet'" />
 {{- else if eq .Site.Language.Lang "lzh" -}}
-<link rel="preload" href="{{ " fonts/朝華標題A.ttf" | relURL }}" as="font" type="font/ttf" crossorigin />
+<link rel="preload" href="{{ " fonts/朝華標題A.woff2" | relURL }}" as="font" type="font/ttf" crossorigin />
 {{- else if eq .Site.Language.Lang "ja" -}}
 <link rel="preload" href="{{ " fonts/sawarabi-gothic-medium.otf" | relURL }}" as="font" type="font/otf" crossorigin />
 {{- else if in (slice "ko" "oko") .Site.Language.Lang -}}
