@@ -52,7 +52,33 @@
   div {
     margin: 8px 0;
     display: flex;
+    align-items: center;
     justify-content: center;
+    white-space: nowrap;
+  }
+}
+
+.footer-beian img {
+  flex: 0 0 auto;
+}
+
+@media #{$mg-normal} {
+  #footer-info {
+    font-size: clamp(9px, 2.85vw, 0.85em);
+    padding: 0 8px;
+
+    div {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .footer-beian img {
+    width: 1.35em;
+    height: 1.35em;
+  }
+
+  #footer-info .footer-info-sep {
+    width: 1.6em;
   }
 }
 

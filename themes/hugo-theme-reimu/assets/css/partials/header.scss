@@ -339,6 +339,19 @@
   }
 }
 
+#mobile-sidebar-toggle {
+  display: none !important;
+  border: 0;
+  color: var(--color-default);
+
+  @media #{$mg-normal} {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    order: 99;
+  }
+}
+
 #sub-nav,
 #i18n-nav {
   display: flex;
@@ -347,6 +360,16 @@
 
 #sub-nav {
   gap: 8px;
+}
+
+@media #{$mg-normal} {
+  #i18n-nav {
+    order: 2;
+  }
+
+  #sub-nav {
+    order: 3;
+  }
 }
 
 #sub-nav {

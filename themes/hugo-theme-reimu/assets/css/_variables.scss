@@ -137,17 +137,71 @@
 }
 
 // Fonts
+@font-face {
+  font-family: 'Glow Sans SC Local';
+  src: url('/fonts/GlowSansSC-Normal-Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Seoul Namsan Local';
+  src: url('/fonts/SeoulNamsanM.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sawarabi Gothic Local';
+  src: url('/fonts/sawarabi-gothic-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Chaohua Title A Local';
+  src: url('/fonts/朝華標題A.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nano Old Song A Local';
+  src: url('/fonts/NanoOldSongA-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Maple Mono NF CN Local';
+  src: url('/fonts/MapleMono-NF-CN-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 $font-title: 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
 $font-korean: 'Noto Sans KR', 'Source Han Sans KR', 'Source Han Sans K', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-$font-basic: 'Noto Sans SC', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC', $font-korean, $basic-families, $local-basic-families;
-$font-code: $custom-code-families, $code-families, $local-code-families;
+$font-basic: 'Glow Sans SC Local', 'Noto Sans SC', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC', $font-korean, $basic-families, $local-basic-families;
+$font-basic-kr: 'Seoul Namsan Local', $font-korean, $basic-families, $local-basic-families;
+$font-basic-ja: 'Sawarabi Gothic Local', 'M PLUS Rounded 1c', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
+$font-basic-en: 'Alegreya Sans', 'Source Sans 3', 'Avenir Next', Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-title-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+$font-basic-lzh: 'Nano Old Song A Local', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
+$font-title-lzh: 'Chaohua Title A Local', 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif CJK SC', Songti SC, SimSun, serif;
+$font-code: 'Maple Mono NF CN Local', $custom-code-families, $code-families, $local-code-families;
 
-$font-size: 14px;
+$font-size: 19px; //普通文本大小
 $line-height: 1.67;
 $line-height-title: 1.2em;
 
 // Header
-$logo-size: 42px;
+$logo-size: 38px;
 $subtitle-size: 17px;
 $banner-height: auto; // header height is now auto — see header.scss
 
@@ -158,11 +212,11 @@ $mobile-nav-width: 280px;
 // Media queries
 $mq-mobile: "screen and (max-width: 479px)";
 $no-mobile: "screen and (min-width: 480px)";
-$mq-tablet: "screen and (min-width: 480px) and (max-width: 767px)";
-$mq-normal: "screen and (min-width: 768px)";
-$mg-normal: "screen and (max-width: 767px)";
-$mq-large: "screen and (min-width: 960px)";
-$mg-large: "screen and (max-width: 959px)";
+$mq-tablet: "screen and (min-width: 480px) and (max-width: 960px)";
+$mq-normal: "screen and (min-width: 961px)";
+$mg-normal: "screen and (max-width: 960px)";
+$mq-large: "screen and (min-width: 961px)";
+$mg-large: "screen and (max-width: 960px)";
 $mq-extra-large: "screen and (min-width: 1242px)";
 $mg-extra-large: "screen and (max-width: 1241px)";
 $post-radius: 22px;

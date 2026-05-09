@@ -172,24 +172,87 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     document.documentElement.classList.toggle("zh-traditional", useTraditional);
   }
 
+  type ZhScriptMode = "simplified" | "traditional";
+  const zhScriptStorageKey = "zh_script";
+
+  function normalizeZhMode(mode: string | null): ZhScriptMode | null {
+    return mode === "simplified" || mode === "traditional" ? mode : null;
+  }
+
+  function fallbackZhModeByBrowserLanguage(): ZhScriptMode {
+    const languages = navigator.languages?.length
+      ? navigator.languages
+      : [navigator.language];
+    if (
+      languages.some((language) =>
+        /^zh-(cn|sg)(?:\b|-|_)/i.test(language.replace("_", "-")),
+      )
+    ) {
+      return "simplified";
+    }
+    return "traditional";
+  }
+
+  async function fetchCountryCode(url: string, field: string) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 1800);
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        credentials: "omit",
+        cache: "no-store",
+      });
+      if (!response.ok) {
+        return "";
+      }
+      const data = await response.json();
+      return String(data?.[field] || "").toUpperCase();
+    } catch {
+      return "";
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  }
+
+  async function detectZhModeByRegion(): Promise<ZhScriptMode> {
+    const countryCode =
+      (await fetchCountryCode("https://api.country.is/", "country")) ||
+      (await fetchCountryCode("https://ipapi.co/json/", "country_code"));
+    if (countryCode) {
+      return countryCode === "CN" ? "simplified" : "traditional";
+    }
+    return fallbackZhModeByBrowserLanguage();
+  }
+
   if (isModernChinese) {
     zhConvertButton.id = "zh-convert-btn";
     zhConvertButton.className = "nav-icon zh-convert-btn";
     zhConvertButton.type = "button";
     _$("#sub-nav").append(zhConvertButton);
-    const savedZhMode = localStorage.getItem("zh_script") || "simplified";
+    const savedZhMode = normalizeZhMode(localStorage.getItem(zhScriptStorageKey));
     applyZhConversion(savedZhMode === "traditional");
+    if (!savedZhMode) {
+      detectZhModeByRegion().then((detectedMode) => {
+        if (normalizeZhMode(localStorage.getItem(zhScriptStorageKey))) {
+          return;
+        }
+        localStorage.setItem(zhScriptStorageKey, detectedMode);
+        applyZhConversion(detectedMode === "traditional");
+      });
+    }
     zhConvertButton.addEventListener("click", () => {
       const useTraditional =
-        localStorage.getItem("zh_script") !== "traditional";
+        localStorage.getItem(zhScriptStorageKey) !== "traditional";
       localStorage.setItem(
-        "zh_script",
+        zhScriptStorageKey,
         useTraditional ? "traditional" : "simplified",
       );
       applyZhConversion(useTraditional);
     });
     window.addEventListener("pjax:complete", () => {
-      applyZhConversion(localStorage.getItem("zh_script") === "traditional");
+      applyZhConversion(
+        localStorage.getItem(zhScriptStorageKey) === "traditional",
+      );
     });
   }
 

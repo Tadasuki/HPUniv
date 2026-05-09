@@ -79,9 +79,8 @@ _$$(".article-entry table").forEach((element) => {
 // Mobile nav
 var isMobileNavAnim = false;
 
-_$("#main-nav-toggle")
-  ?.off("click")
-  .on("click", () => {
+_$$<HTMLElement>("#main-nav-toggle, #mobile-sidebar-toggle").forEach((element) => {
+  element.off("click").on("click", () => {
     if (isMobileNavAnim) return;
     isMobileNavAnim = true;
     document.body.classList.toggle("mobile-nav-on");
@@ -90,6 +89,7 @@ _$("#main-nav-toggle")
       isMobileNavAnim = false;
     }, 300);
   });
+});
 
 _$("#mask")
   ?.off("click")

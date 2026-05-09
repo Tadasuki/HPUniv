@@ -28,6 +28,7 @@
     <a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation">
+    <button id="mobile-sidebar-toggle" class="nav-icon" type="button" aria-label="Open mobile sidebar"></button>
     {{- with .OutputFormats.Get "rss" -}}
     <a id="nav-rss-link" class="nav-icon" href="{{ .Permalink | relURL }}" title="{{ i18n " rss_feed" }}"
       aria-label="{{ i18n " rss_feed" }}" target="_blank"></a>
@@ -45,8 +46,16 @@
   {{- range .Site.Languages -}}
   {{- $i18nMap = merge $i18nMap (dict .Lang .LanguageName) -}}
   {{- end -}}
+  {{- $translationByLang := dict -}}
+  {{- range .AllTranslations -}}
+    {{- $translationByLang = merge $translationByLang (dict (lower .Language.Lang) .) -}}
+  {{- end -}}
+  {{- $hasOko := false -}}
+  {{- with index $translationByLang "oko" -}}
+    {{- $hasOko = true -}}
+  {{- end -}}
   {{- $currentLang := lower $.Language.Lang -}}
-  {{- $selectedLang := cond (eq $currentLang "ko") "oko" $.Language.Lang -}}
+  {{- $selectedLang := cond (and (eq $currentLang "ko") $hasOko) "oko" $.Language.Lang -}}
   {{- $currentFlag := index $flagMap (lower $selectedLang) | default "/images/flags/black-dragon.svg" -}}
   {{- $koMixedURL := "" -}}
   {{- $koHangulURL := "" -}}
@@ -67,10 +76,12 @@
       </div>
       <ul class="select-items" id="select-items" role="listbox" aria-label="Languages">
         {{- range .Site.Languages -}}
-        {{- if ne (lower .Lang) "ko" -}}
+        {{- $lang := lower .Lang -}}
+        {{- $translation := index $translationByLang $lang -}}
+        {{- if and $translation (or (ne $lang "ko") (not $hasOko)) -}}
         {{- $flag := index $flagMap (lower .Lang) | default "/images/flags/black-dragon.svg" -}}
-        {{- $isSelected := or (eq $.Language.Lang .Lang) (and (eq $currentLang "ko") (eq (lower .Lang) "oko")) -}}
-        <li data-value="{{ .Lang }}" role="option" {{ if $isSelected }}class="selected"
+        {{- $isSelected := eq (lower $selectedLang) $lang -}}
+        <li data-value="{{ .Lang }}" data-url="{{ $translation.RelPermalink }}" role="option" {{ if $isSelected }}class="selected"
           aria-selected="true" {{ else }}aria-selected="false" {{ end }}>
           <span class="language-option">
             <img class="language-flag" src="{{ $flag | relURL }}" alt="" aria-hidden="true" loading="lazy">
@@ -101,12 +112,8 @@
 
       selectOptions.forEach((item) => {
         item.addEventListener("click", () => {
-          const langMap = {};
-          {{ with .Translations }}
-          {{ range . }}
-          langMap['{{ .Language.Lang }}'] = '{{ .RelPermalink }}';
-          {{ end }}
-          {{ end }}
+          const targetUrl = item.dataset.url;
+          const isSelectedOption = item.classList.contains("selected");
           const flag = item.querySelector(".language-flag");
           const langName = item.querySelector(".language-name");
           if (flag && selectedFlag) {
@@ -116,16 +123,11 @@
           selectItems.classList.remove("show");
           selectOptions.forEach((option) => {
             option.classList.remove("selected");
+            option.setAttribute("aria-selected", "false");
           });
           item.classList.add("selected");
-          if (item.dataset.value === '{{ $.Language.Lang }}') {
-            return;
-          }
-          if (!langMap[item.dataset.value]) {
-            _$("#lang-tooltip").style.opacity = "1";
-            setTimeout(() => {
-              _$("#lang-tooltip").style.opacity = "0";
-            }, 1000);
+          item.setAttribute("aria-selected", "true");
+          if (isSelectedOption || !targetUrl) {
             return;
           }
           // Dispatch pjax:send to trigger the blur/loading animation.
@@ -135,7 +137,7 @@
           
           // Give the browser 350ms to fully animate the blur before freezing for reload
           setTimeout(() => {
-            window.location = langMap[item.dataset.value];
+            window.location = targetUrl;
           }, 350);
         });
       });

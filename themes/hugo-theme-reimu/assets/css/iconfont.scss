@@ -68,6 +68,11 @@ $icon-url: "//at.alicdn.com/t/c/font_#{$icon_font}.woff2";
   content: "\e62f";
 }
 
+#mobile-sidebar-toggle:before {
+  font-family: $font-icon;
+  content: "\e62f";
+}
+
 #nav-rss-link:before {
   font-family: $font-icon;
   content: "\e61f";

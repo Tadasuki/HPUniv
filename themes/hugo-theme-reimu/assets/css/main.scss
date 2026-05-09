@@ -198,6 +198,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
+  font-size: $font-size;
   font-family: $font-basic;
   // Smooth dark/light mode color crossfade
   transition: background-color 0.35s ease, color 0.35s ease;
@@ -210,9 +211,53 @@ body {
   }
 }
 
+body:lang(en) {
+  font-family: $font-basic-en;
+}
+
+body:lang(en) h1,
+body:lang(en) h2,
+body:lang(en) h3,
+body:lang(en) h4,
+body:lang(en) h5,
+body:lang(en) h6,
+body:lang(en) #logo,
+body:lang(en) #subtitle,
+body:lang(en) .post-title,
+body:lang(en) .archive-article-title,
+body:lang(en) .widget-title,
+body:lang(en) .article-nav-title,
+body:lang(en) .comment-title {
+  font-family: $font-title-en;
+}
+
+body:lang(lzh) {
+  font-family: $font-basic-lzh;
+}
+
+body:lang(lzh) h1,
+body:lang(lzh) h2,
+body:lang(lzh) h3,
+body:lang(lzh) h4,
+body:lang(lzh) h5,
+body:lang(lzh) h6,
+body:lang(lzh) #logo,
+body:lang(lzh) #subtitle,
+body:lang(lzh) .post-title,
+body:lang(lzh) .archive-article-title,
+body:lang(lzh) .widget-title,
+body:lang(lzh) .article-nav-title,
+body:lang(lzh) .comment-title {
+  font-family: $font-title-lzh;
+}
+
 body:lang(ko),
 body:lang(oko) {
-  font-family: $font-basic;
+  font-family: $font-basic-kr;
+}
+
+body:lang(ja) {
+  font-family: $font-basic-ja;
 }
 
 body:lang(ko) .article-entry p,
@@ -227,7 +272,7 @@ body:lang(oko) .article-entry td,
 body:lang(oko) .article-entry th,
 body:lang(oko) .article-summary,
 body:lang(oko) .post-excerpt {
-  font-family: $font-korean;
+  font-family: $font-basic-kr;
 }
 
 a, .main-nav-icon, .popup-btn-close, button {
@@ -429,6 +474,21 @@ a, .main-nav-icon, .popup-btn-close, button {
 
 #mobile-nav .sidebar-wrap {
   box-shadow: none;
+}
+
+body:lang(lzh) {
+  :where(
+    p, a, span, li, td, th, blockquote,
+    input, textarea, button,
+    .article-entry,
+    .article-summary,
+    .post-excerpt,
+    .site-search,
+    .notification,
+    .aplayer
+  ):not(pre, pre *, code, code *, kbd, kbd *, samp, samp *, .icon, .main-nav-icon, [class*="fa-"], [class*="icon-"]) {
+    font-family: $font-basic-lzh;
+  }
 }
 
 [data-theme="dark"] {

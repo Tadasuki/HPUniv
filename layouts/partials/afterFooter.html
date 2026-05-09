@@ -63,7 +63,7 @@
 {{- if $params.firework.enable -}}
 <script>
   var setupFirework = () => {
-    if (!{{ $params.firework.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 768px)').matches) {
+    if (!{{ $params.firework.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 960px)').matches) {
       if (window.firework) {
         const options = JSON.parse({{ $params.firework.options | jsonify }});
         options.excludeElements = options.excludeelements;
@@ -408,8 +408,8 @@
   {{- if not $params.player.meting.enable -}}
     <script>
     var setupAPlayer = () => {
-      if (!{{ $params.player.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 768px)').matches) {
-        if (window.matchMedia('(max-width: 959px)').matches) {
+      if (!{{ $params.player.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 960px)').matches) {
+        if (window.matchMedia('(max-width: 960px)').matches) {
         const aplayer = _$('#aplayer');
           if (aplayer) {
             const aside = aplayer.parentNode?.parentNode;
@@ -440,8 +440,8 @@
   {{- else -}}
     <script>
     var setupAPlayer = () => {
-      if (!{{ $params.player.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 768px)').matches) {
-        if (window.matchMedia('(max-width: 959px)').matches) {
+      if (!{{ $params.player.disable_on_mobile | default false }} || !window.matchMedia('(max-width: 960px)').matches) {
+        if (window.matchMedia('(max-width: 960px)').matches) {
           const meting = _$('meting-js');
           if (meting) {
             meting.setAttribute('fixed', 'true');
