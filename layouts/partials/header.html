@@ -40,8 +40,8 @@
   </nav>
   {{- if and hugo.IsMultilingual (ne "404" .Type) -}}
   {{- $i18nMap := dict -}}
-  {{- $flagMap := dict "zh-cn" "/images/flags/black-dragon.svg" "lzh"
-  "/images/flags/tang.svg" "ko" "/images/flags/kr.svg" "oko" "/images/flags/kr.svg"
+  {{- $flagMap := dict "zh-cn" "/images/flags/cn.svg" "lzh"
+  "/images/flags/black-dragon.svg" "ko" "/images/flags/kr.svg" "oko" "/images/flags/kr.svg"
   "ja" "/images/flags/jp.svg" "en" "/images/flags/us.svg" -}}
   {{- range .Site.Languages -}}
   {{- $i18nMap = merge $i18nMap (dict .Lang .LanguageName) -}}
@@ -70,7 +70,8 @@
         <span id="nav-language-btn" class="nav-icon" style="padding: 0 20px 0 0"></span>
         <span class="language-option">
           <img id="selected-flag" class="language-flag" src="{{ $currentFlag | relURL }}" alt="" aria-hidden="true"
-            loading="lazy">
+            loading="lazy" data-zh-simplified-flag="{{ "/images/flags/cn.svg" | relURL }}"
+            data-zh-traditional-flag="{{ "/images/flags/tw.svg" | relURL }}">
           <span id="selected-lang" class="language-name">{{ index $i18nMap $selectedLang }}</span>
         </span>
       </div>
@@ -96,7 +97,8 @@
       window.koScriptLinks = {
         current: '{{ $currentLang }}',
         mixed: '{{ $koMixedURL }}',
-        hangul: '{{ $koHangulURL }}'
+        hangul: '{{ $koHangulURL }}',
+        dictionary: '{{ "/data/ko-script-map.json" | relURL }}'
       };
       var selectSelected = document.getElementById("select-selected");
       var selectedFlag = document.getElementById("selected-flag");

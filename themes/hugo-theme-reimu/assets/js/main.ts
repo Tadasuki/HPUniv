@@ -101,7 +101,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     "SVG",
   ]);
   const skippedSelectors =
-    ".icon,.language-flag,#zh-convert-btn,#nav-language-btn,mjx-container";
+    ".icon,.language-flag,#zh-convert-btn,#ko-script-btn,#nav-language-btn,mjx-container";
   const zhOriginalText = new WeakMap<Text, string>();
   type OpenCCWindow = Window &
     typeof globalThis & {
@@ -170,16 +170,20 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
       useTraditional ? "转换为简体" : "轉換為繁體",
     );
     document.documentElement.classList.toggle("zh-traditional", useTraditional);
+    updateModernChineseFlag(useTraditional);
   }
 
   type ZhScriptMode = "simplified" | "traditional";
+  type ZhRegion = "mainland" | "outside";
   const zhScriptStorageKey = "zh_script";
+  let zhRegion: ZhRegion = fallbackZhRegionByBrowserLanguage();
+  let activeZhMode: ZhScriptMode = zhModeForRegion(zhRegion);
 
   function normalizeZhMode(mode: string | null): ZhScriptMode | null {
     return mode === "simplified" || mode === "traditional" ? mode : null;
   }
 
-  function fallbackZhModeByBrowserLanguage(): ZhScriptMode {
+  function fallbackZhRegionByBrowserLanguage(): ZhRegion {
     const languages = navigator.languages?.length
       ? navigator.languages
       : [navigator.language];
@@ -188,9 +192,50 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
         /^zh-(cn|sg)(?:\b|-|_)/i.test(language.replace("_", "-")),
       )
     ) {
-      return "simplified";
+      return "mainland";
     }
-    return "traditional";
+    return "outside";
+  }
+
+  function zhModeForRegion(region: ZhRegion): ZhScriptMode {
+    return region === "mainland" ? "simplified" : "traditional";
+  }
+
+  function zhFlagPaths() {
+    const selectedFlag = document.getElementById(
+      "selected-flag",
+    ) as HTMLImageElement | null;
+    return {
+      simplified:
+        selectedFlag?.dataset.zhSimplifiedFlag || "/images/flags/cn.svg",
+      traditional:
+        selectedFlag?.dataset.zhTraditionalFlag || "/images/flags/tw.svg",
+    };
+  }
+
+  function zhLanguageOptionFlags() {
+    return Array.from(
+      document.querySelectorAll<HTMLImageElement>(
+        '#select-items li[data-value="zh-CN"] .language-flag, #select-items li[data-value="zh-cn"] .language-flag',
+      ),
+    );
+  }
+
+  function updateModernChineseFlag(useTraditional: boolean) {
+    const paths = zhFlagPaths();
+    const flag =
+      zhRegion === "outside" && useTraditional
+        ? paths.traditional
+        : paths.simplified;
+    const selectedFlag = document.getElementById(
+      "selected-flag",
+    ) as HTMLImageElement | null;
+    if (selectedFlag && isModernChinese) {
+      selectedFlag.src = flag;
+    }
+    zhLanguageOptionFlags().forEach((optionFlag) => {
+      optionFlag.src = flag;
+    });
   }
 
   async function fetchCountryCode(url: string, field: string) {
@@ -214,14 +259,14 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     }
   }
 
-  async function detectZhModeByRegion(): Promise<ZhScriptMode> {
+  async function detectZhRegion(): Promise<ZhRegion> {
     const countryCode =
       (await fetchCountryCode("https://api.country.is/", "country")) ||
       (await fetchCountryCode("https://ipapi.co/json/", "country_code"));
     if (countryCode) {
-      return countryCode === "CN" ? "simplified" : "traditional";
+      return countryCode === "CN" ? "mainland" : "outside";
     }
-    return fallbackZhModeByBrowserLanguage();
+    return fallbackZhRegionByBrowserLanguage();
   }
 
   if (isModernChinese) {
@@ -230,50 +275,53 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     zhConvertButton.type = "button";
     _$("#sub-nav").append(zhConvertButton);
     const savedZhMode = normalizeZhMode(localStorage.getItem(zhScriptStorageKey));
-    applyZhConversion(savedZhMode === "traditional");
-    if (!savedZhMode) {
-      detectZhModeByRegion().then((detectedMode) => {
-        if (normalizeZhMode(localStorage.getItem(zhScriptStorageKey))) {
-          return;
-        }
-        localStorage.setItem(zhScriptStorageKey, detectedMode);
-        applyZhConversion(detectedMode === "traditional");
-      });
-    }
+    const initialMode = savedZhMode || zhModeForRegion(zhRegion);
+    activeZhMode = initialMode;
+    applyZhConversion(initialMode === "traditional");
+    detectZhRegion().then((detectedRegion) => {
+      zhRegion = detectedRegion;
+      const currentMode =
+        normalizeZhMode(localStorage.getItem(zhScriptStorageKey)) ||
+        zhModeForRegion(detectedRegion);
+      activeZhMode = currentMode;
+      applyZhConversion(currentMode === "traditional");
+    });
     zhConvertButton.addEventListener("click", () => {
       const useTraditional =
         localStorage.getItem(zhScriptStorageKey) !== "traditional";
+      activeZhMode = useTraditional ? "traditional" : "simplified";
       localStorage.setItem(
         zhScriptStorageKey,
-        useTraditional ? "traditional" : "simplified",
+        activeZhMode,
       );
       applyZhConversion(useTraditional);
     });
     window.addEventListener("pjax:complete", () => {
-      applyZhConversion(
-        localStorage.getItem(zhScriptStorageKey) === "traditional",
-      );
+      activeZhMode =
+        normalizeZhMode(localStorage.getItem(zhScriptStorageKey)) ||
+        activeZhMode;
+      applyZhConversion(activeZhMode === "traditional");
     });
   }
 
   // Korean Hangul / Hanja-Hangul mixed toggle
   const koScriptButton = document.createElement("button");
+  const koScriptStorageKey = "ko_script";
+  const koOriginalText = new WeakMap<Text, string>();
+  type KoScriptMode = "mixed" | "hangul";
+  type KoScriptEntry = {
+    hangul: string;
+    mixed: string;
+  };
+  type KoScriptDictionary = {
+    phrases?: KoScriptEntry[];
+    terms?: KoScriptEntry[];
+  };
+  let activeKoMode: KoScriptMode = "hangul";
+  let koDictionaryPromise: Promise<KoScriptDictionary> | undefined;
 
-  function koPathFallback(targetMode: "mixed" | "hangul") {
-    const { pathname, search, hash } = window.location;
-    if (targetMode === "mixed" && pathname.startsWith("/ko/")) {
-      return `/oko/${pathname.slice(4)}${search}${hash}`;
-    }
-    if (targetMode === "hangul" && pathname.startsWith("/oko/")) {
-      return `/ko/${pathname.slice(5)}${search}${hash}`;
-    }
-    if (targetMode === "mixed" && pathname === "/ko") {
-      return `/oko${search}${hash}`;
-    }
-    if (targetMode === "hangul" && pathname === "/oko") {
-      return `/ko${search}${hash}`;
-    }
-    return "";
+  function normalizeKoMode(mode: string | null): KoScriptMode | null {
+    return mode === "mixed" || mode === "hangul" ? mode : null;
   }
 
   function koScriptLinks() {
@@ -282,6 +330,7 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
         current: "",
         mixed: "",
         hangul: "",
+        dictionary: "",
       }
     );
   }
@@ -302,9 +351,96 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     return "";
   }
 
-  function koTargetUrl(targetMode: "mixed" | "hangul") {
+  function currentKoMode(): KoScriptMode {
+    return currentKoScript() === "oko" ? "mixed" : "hangul";
+  }
+
+  function koDictionaryUrl() {
     const links = koScriptLinks();
-    return links[targetMode] || koPathFallback(targetMode);
+    return links.dictionary || "/data/ko-script-map.json";
+  }
+
+  function normalizeKoDictionary(dictionary: KoScriptDictionary) {
+    const normalizeEntries = (entries: KoScriptEntry[] = []) =>
+      entries
+        .filter((entry) => entry.hangul && entry.mixed && entry.hangul !== entry.mixed)
+        .sort(
+          (left, right) =>
+            Math.max(right.hangul.length, right.mixed.length) -
+              Math.max(left.hangul.length, left.mixed.length) ||
+            right.hangul.length - left.hangul.length,
+        );
+    return {
+      phrases: normalizeEntries(dictionary.phrases),
+      terms: normalizeEntries(dictionary.terms),
+    };
+  }
+
+  function loadKoDictionary() {
+    if (!koDictionaryPromise) {
+      koDictionaryPromise = fetch(koDictionaryUrl(), {
+        cache: "no-store",
+        credentials: "same-origin",
+      })
+        .then((response) => (response.ok ? response.json() : {}))
+        .then((dictionary) => normalizeKoDictionary(dictionary))
+        .catch(() => ({ phrases: [], terms: [] }));
+    }
+    return koDictionaryPromise;
+  }
+
+  function replaceAllLiteral(text: string, search: string, replacement: string) {
+    return search ? text.split(search).join(replacement) : text;
+  }
+
+  function convertKoText(text: string, mode: KoScriptMode, dictionary: KoScriptDictionary) {
+    const entries = [
+      ...(dictionary.phrases || []),
+      ...(dictionary.terms || []),
+    ];
+    return entries.reduce((converted, entry) => {
+      const source = mode === "mixed" ? entry.hangul : entry.mixed;
+      const target = mode === "mixed" ? entry.mixed : entry.hangul;
+      return replaceAllLiteral(converted, source, target);
+    }, text);
+  }
+
+  function koTextNodes(root: ParentNode) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent || skippedTags.has(parent.tagName)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (parent.closest(skippedSelectors)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (!node.nodeValue || !/[\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7a3]/.test(node.nodeValue)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const nodes: Text[] = [];
+    while (walker.nextNode()) {
+      nodes.push(walker.currentNode as Text);
+    }
+    return nodes;
+  }
+
+  async function applyKoConversion(mode: KoScriptMode) {
+    if (!currentKoScript()) {
+      return;
+    }
+    const dictionary = await loadKoDictionary();
+    koTextNodes(document.body).forEach((node) => {
+      const original = koOriginalText.get(node) || node.nodeValue || "";
+      koOriginalText.set(node, original);
+      node.nodeValue = convertKoText(original, mode, dictionary);
+    });
+    activeKoMode = mode;
+    document.documentElement.classList.toggle("ko-mixed-script", mode === "mixed");
+    updateKoScriptButton();
   }
 
   function updateKoScriptButton() {
@@ -317,34 +453,33 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
     }
     koScriptButton.style.setProperty("display", "flex", "important");
 
-    const useHangul = script !== "ko";
+    const useHangul = activeKoMode === "mixed";
     const targetMode = useHangul ? "hangul" : "mixed";
-    const target = koTargetUrl(targetMode);
     koScriptButton.textContent = useHangul ? "한글전용과" : "국한문혼용";
     koScriptButton.title = useHangul ? "한글 전용으로 보기" : "國漢文混寫로 보기";
     koScriptButton.setAttribute("aria-label", koScriptButton.title);
     koScriptButton.dataset.targetMode = targetMode;
-    koScriptButton.disabled = !target;
+    koScriptButton.disabled = false;
   }
 
   koScriptButton.id = "ko-script-btn";
   koScriptButton.className = "nav-icon ko-script-btn";
   koScriptButton.type = "button";
   _$("#sub-nav").append(koScriptButton);
+  activeKoMode = normalizeKoMode(localStorage.getItem(koScriptStorageKey)) || currentKoMode();
   updateKoScriptButton();
+  applyKoConversion(activeKoMode);
   koScriptButton.addEventListener("click", () => {
     const targetMode = koScriptButton.dataset.targetMode as "mixed" | "hangul";
-    const target = koTargetUrl(targetMode);
-    if (!target) {
-      return;
-    }
-    (window as any).isLangSwitch = true;
-    document.dispatchEvent(new Event("pjax:send"));
-    setTimeout(() => {
-      window.location.href = target;
-    }, 350);
+    activeKoMode = targetMode;
+    localStorage.setItem(koScriptStorageKey, activeKoMode);
+    applyKoConversion(activeKoMode);
   });
-  window.addEventListener("pjax:complete", updateKoScriptButton);
+  window.addEventListener("pjax:complete", () => {
+    activeKoMode = normalizeKoMode(localStorage.getItem(koScriptStorageKey)) || currentKoMode();
+    updateKoScriptButton();
+    applyKoConversion(activeKoMode);
+  });
 
   // dark_mode
   const themeButton = document.createElement("a");
